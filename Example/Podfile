@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ShiftViewController_Example' do
+  pod 'ShiftViewController', :path => '../'
+
+  target 'ShiftViewController_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
