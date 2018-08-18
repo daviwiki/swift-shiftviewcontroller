@@ -76,7 +76,6 @@ public class ShiftCardViewController: UIViewController {
         cardViewFrame.origin.y += verticalInset
         
         cardView.frame = cardViewFrame
-        print("Frame at index \(index) -> \(cardViewFrame)")
     }
     
     /**

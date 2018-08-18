@@ -53,7 +53,8 @@ open class ShiftCardViewCell: UIView {
             removeAnimations()
             layer.rasterizationScale = UIScreen.main.scale
             layer.shouldRasterize = true
-//            delegate?.didBeginSwipe(onView: self)
+            // todo: notify begin swipe
+            print("Being element animate")
         case .changed:
             let rotationStrength = min(translation.x / frame.width, maxRotation)
             let rotationAngle = animationDirectionY * maxRotationAngle * rotationStrength
@@ -61,10 +62,12 @@ open class ShiftCardViewCell: UIView {
             transform = CATransform3DRotate(transform, rotationAngle, 0, 0, 1)
             transform = CATransform3DTranslate(transform, translation.x, translation.y, 0)
             layer.transform = transform
+            // todo: notify percent location
         case .ended:
-            resetCardLocation()
+            onUserEndPan(from: translation)
             layer.shouldRasterize = false
         default:
+            // todo: notify end with recoveral
             resetCardLocation()
             layer.shouldRasterize = false
         }
@@ -72,14 +75,98 @@ open class ShiftCardViewCell: UIView {
     }
 }
 
+// MARK: Error
+private enum ShiftCardError: Error {
+    case noShiftDirection
+}
+
 // MARK: Animations
 
-extension ShiftCardViewCell {
+private extension ShiftCardViewCell {
 
+    /**
+    Execute the action when user end pan gesture. If state determine that the card is near of initial state, recover
+    it, otherwise eject the card outside the stack and notify this case
+    - Parameter translation: last drag user point using 'self' coordinate system
+    */
+    private func onUserEndPan(from translation: CGPoint) {
+        let swipeThreshold: CGFloat = 0.6
+        guard getDragPercentage(from: translation) > swipeThreshold else {
+            print("Recover the cell")
+            resetCardLocation()
+            return
+        }
+
+        // todo: notificar sacar elemento fuera
+        print("Animate element outside the stack -> direction \(try! getDragDirection(from: translation))")
+        resetCardLocation()
+    }
+
+    /**
+    Return the drag percentage status based on the location into the view
+    - Parameter translation: reference point
+    - Returns the percentage based on distance from translation in [0, 1]
+    */
+    private func getDragPercentage(from translation: CGPoint) -> CGFloat {
+        guard let direction = try? getDragDirection(from: translation) else { return 0 }
+
+        // Convert the point into coordinate system [-1, 1]
+        let normalizedDragPoint = translation.normalizedDistanceForSize(bounds.size)
+
+        // Project vector where user stop drag on the vector that normalize the direction
+        // taken based on where user drag too
+        let swipePoint = normalizedDragPoint.scalarProjection(over: direction.point)
+
+        // Distance from user drag to the center
+        let centerDistance = swipePoint.distanceTo(.zero)
+        // Line that connects the user end drag point to the center
+        let targetLine: CGLine = (swipePoint, CGPoint.zero)
+
+        return ShiftCardDirection
+                .coordinateRect
+                .perimeterLines
+                .compactMap { CGPoint.intersectionBetweenLines(targetLine, line2: $0) }
+                .map { centerDistance / $0.distanceTo(.zero) }
+                .min() ?? 0.0
+    }
+
+    /**
+     Return the drag direction based on the location of the translation.
+     - Throw ShiftCardError.noShiftDirection if couldn't identify a direction
+    */
+    private func getDragDirection(from translation: CGPoint) throws -> ShiftCardDirection {
+        // Convert the point into coordinate system [-1, 1]
+        let normalizedDragPoint = translation.normalizedDistanceForSize(bounds.size)
+
+        // Now we calculate the nearest distance to the normalized point based on [-1 | 0 | 1] coordinate system.
+        typealias Closest = (distance: CGFloat, direction: ShiftCardDirection?)
+        let initial: Closest = (CGFloat.infinity, nil)
+        let result = ShiftCardDirection.allDirections.reduce(initial) { (closest: Closest, direction: ShiftCardDirection) -> Closest in
+            let distance = direction.point.distanceTo(normalizedDragPoint)
+            if distance < closest.distance {
+                return (distance, direction)
+            }
+            return closest
+        }
+
+        if result.direction == nil {
+            throw ShiftCardError.noShiftDirection
+        }
+
+        return result.direction!
+    }
+
+    /**
+     Remove all animations from the layer
+    */
     private func removeAnimations() {
         layer.removeAllAnimations()
     }
 
+    /**
+     Recover card to initial state into the view
+     - Parameter animated: Indicate if this recover will perform with animation or not (default true)
+     */
     private func resetCardLocation(animated: Bool = true) {
         layer.removeAllAnimations()
         
