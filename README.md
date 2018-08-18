@@ -22,7 +22,7 @@ pod 'ShiftViewController'
 
 ## Author
 
-daviwiki, david.martinez@innocv.com
+daviwiki, daviddvd19@gmail.com
 
 ## License
 

@@ -7,18 +7,79 @@
 //
 
 import UIKit
+import ShiftViewController
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let width = view.bounds.width * 0.8
+        let height = view.bounds.height * 0.8
+        let x = (view.bounds.width - width) / 2
+        let y = (view.bounds.height - height) / 2
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        
+        let shiftVC = ShiftCardViewController()
+        addChildViewController(shiftVC)
+        shiftVC.view.frame = frame
+        shiftVC.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        view.addSubview(shiftVC.view)
+        didMove(toParentViewController: shiftVC)
+        
+        shiftVC.dataSource = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
 }
 
+extension ViewController: ShiftCardViewDataSource {
+    
+    func noMoreCardsView(shiftController: ShiftCardViewController) -> UIView? {
+        return nil
+    }
+    
+    func numberOfCards(shiftController: ShiftCardViewController) -> Int {
+        return 5
+    }
+    
+    func card(shiftController: ShiftCardViewController, forItemAtIndex index: Int) -> ShiftCardViewCell {
+        return ViewCell()
+    }
+    
+}
+
+class ViewCell: ShiftCardViewCell {
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        clipsToBounds = true
+        
+        let colors = [UIColor.red, .blue, .yellow, .orange, .brown, .cyan, .gray, .green]
+        let color = colors[Int(arc4random()) % colors.count]
+        
+        let contentView = UIView()
+        contentView.backgroundColor = color
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 6.0
+        contentView.layer.shadowRadius = 2.0
+        contentView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
+        
+        addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        let topConstraint = contentView.topAnchor.constraint(equalTo: topAnchor, constant: 8)
+        let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+        let leftConstraint = contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8)
+        let rightConstraint = contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8)
+        rightConstraint.priority = UILayoutPriority(999)
+        bottomConstraint.priority = UILayoutPriority(999)
+
+        NSLayoutConstraint.activate([topConstraint, bottomConstraint, leftConstraint, rightConstraint])
+
+        layoutIfNeeded()
+    }
+    
+}

@@ -1,0 +1,16 @@
+PODS:
+  - ShiftViewController (0.1.0)
+
+DEPENDENCIES:
+  - ShiftViewController (from `../`)
+
+EXTERNAL SOURCES:
+  ShiftViewController:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ShiftViewController: c813f90c61080081ea7275830c8da1a44dcf6ba0
+
+PODFILE CHECKSUM: 9e8dacaa5909163f316aaa11bc5f5592a27047ad
+
+COCOAPODS: 1.5.3
