@@ -11,6 +11,8 @@ import ShiftViewController
 
 class ViewController: UIViewController {
 
+    private weak var shiftVC: ShiftCardViewController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,14 +30,21 @@ class ViewController: UIViewController {
         didMove(toParentViewController: shiftVC)
         
         shiftVC.dataSource = self
+
+        self.shiftVC = shiftVC
     }
-    
+
+    func reloadData() {
+        shiftVC?.reloadData()
+    }
 }
 
 extension ViewController: ShiftCardViewDataSource {
     
     func noMoreCardsView(shiftController: ShiftCardViewController) -> UIView? {
-        return nil
+        let emtpyView = EmptyView(frame: .zero)
+        emtpyView.viewController = self
+        return emtpyView
     }
     
     func numberOfCards(shiftController: ShiftCardViewController) -> Int {
@@ -82,4 +91,24 @@ class ViewCell: ShiftCardViewCell {
         layoutIfNeeded()
     }
     
+}
+
+class EmptyView: UIView {
+
+    weak var viewController: ViewController?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .black
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(onTap(gesture:)))
+        self.addGestureRecognizer(gesture)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    @objc func onTap(gesture: UITapGestureRecognizer) {
+        viewController?.reloadData()
+    }
 }

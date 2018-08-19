@@ -8,13 +8,20 @@
 import UIKit
 
 open class ShiftCardViewCell: UIView {
-    
+
+    private enum AnimationKeys: String {
+        case resetCard
+    }
+
     private var panGestureRecognizer: UIPanGestureRecognizer?
-    
+
+    private let shiftThreshold: CGFloat = 0.6
     private let maxRotation: CGFloat = 1.0
     private let animationDirectionY: CGFloat = 1.0
     private let maxRotationAngle: CGFloat = CGFloat(Double.pi) / 10.0
-    
+
+    weak var delegate: ShiftCardViewCellDelegate?
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupGestureRecognizers()
@@ -54,7 +61,7 @@ open class ShiftCardViewCell: UIView {
             layer.rasterizationScale = UIScreen.main.scale
             layer.shouldRasterize = true
             // todo: notify begin swipe
-            print("Being element animate")
+            print("Begin element animate")
         case .changed:
             let rotationStrength = min(translation.x / frame.width, maxRotation)
             let rotationAngle = animationDirectionY * maxRotationAngle * rotationStrength
@@ -62,17 +69,29 @@ open class ShiftCardViewCell: UIView {
             transform = CATransform3DRotate(transform, rotationAngle, 0, 0, 1)
             transform = CATransform3DTranslate(transform, translation.x, translation.y, 0)
             layer.transform = transform
-            // todo: notify percent location
+
+            let percent = getDragPercentage(from: translation)
+            notifyCellPanShift(with: percent)
         case .ended:
             onUserEndPan(from: translation)
             layer.shouldRasterize = false
         default:
-            // todo: notify end with recoveral
             resetCardLocation()
             layer.shouldRasterize = false
         }
-
     }
+
+    // MARK - Override methods
+
+    /**
+    This method could be overwritten by all subclasses. Its notify each time the user drag the card through the
+    screen with the percent (in range [0, 1]) from the origin point. By default do nothing
+    - Parameter percent: shift percent at range [0, 1]
+    */
+    open func notifyCellPanShift(with percent: CGFloat) {
+        // to override
+    }
+
 }
 
 // MARK: Error
@@ -90,16 +109,14 @@ private extension ShiftCardViewCell {
     - Parameter translation: last drag user point using 'self' coordinate system
     */
     private func onUserEndPan(from translation: CGPoint) {
-        let swipeThreshold: CGFloat = 0.6
-        guard getDragPercentage(from: translation) > swipeThreshold else {
+        guard getDragPercentage(from: translation) > shiftThreshold else {
             print("Recover the cell")
             resetCardLocation()
             return
         }
 
-        // todo: notificar sacar elemento fuera
-        print("Animate element outside the stack -> direction \(try! getDragDirection(from: translation))")
-        resetCardLocation()
+        // todo: Incluir la animacion previa a sacar el elemento fuera
+        delegate?.shiftCardCell(self, didEndShift: true)
     }
 
     /**
@@ -168,6 +185,8 @@ private extension ShiftCardViewCell {
      - Parameter animated: Indicate if this recover will perform with animation or not (default true)
      */
     private func resetCardLocation(animated: Bool = true) {
+        // todo: Notificar a las celdas que vuelven a estado 0
+
         layer.removeAllAnimations()
         
         if !animated {
@@ -185,17 +204,21 @@ private extension ShiftCardViewCell {
         springAnimation.fillMode = kCAFillModeForwards
         springAnimation.delegate = self
         
-        let key = "resetCardLocation"
+        let key = AnimationKeys.resetCard.rawValue
         layer.add(springAnimation, forKey: key)
     }
 
 }
 
 extension ShiftCardViewCell: CAAnimationDelegate {
+
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        guard let propertyAnimation = anim as? CAPropertyAnimation else { return }
-        if propertyAnimation.keyPath == #keyPath(CALayer.transform) {
+        let isResetCardAnimation = anim === layer.animation(forKey: AnimationKeys.resetCard.rawValue)
+
+        if isResetCardAnimation {
             layer.transform = CATransform3DIdentity
+            notifyCellPanShift(with: 0)
+            return
         }
     }
 }
