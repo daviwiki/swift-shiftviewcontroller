@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/ShiftViewController.svg?style=flat)](https://cocoapods.org/pods/ShiftViewController)
 [![Platform](https://img.shields.io/cocoapods/p/ShiftViewController.svg?style=flat)](https://cocoapods.org/pods/ShiftViewController)
 
+## Notes
+A full documentation will be available as soon as posible. Be patient :).
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
