@@ -11,6 +11,12 @@ open class ShiftCardViewCell: UIView {
 
     private enum AnimationKeys: String {
         case resetCard
+        case dismissCard
+    }
+
+    private enum AnimationDuration: Double {
+        case reset = 0.6
+        case dismiss = 0.3
     }
 
     private var panGestureRecognizer: UIPanGestureRecognizer?
@@ -110,13 +116,50 @@ private extension ShiftCardViewCell {
     */
     private func onUserEndPan(from translation: CGPoint) {
         guard getDragPercentage(from: translation) > shiftThreshold else {
-            print("Recover the cell")
             resetCardLocation()
             return
         }
 
-        // todo: Incluir la animacion previa a sacar el elemento fuera
-        delegate?.shiftCardCell(self, didEndShift: true)
+        guard let direction = try? getDragDirection(from: translation) else {
+            resetCardLocation()
+            return
+        }
+
+        layer.removeAllAnimations()
+        let destination = dismissAnimationDestination(for: direction)
+        let basicAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
+        basicAnimation.duration = AnimationDuration.dismiss.rawValue
+        basicAnimation.delegate = self
+        basicAnimation.fromValue = self.transform
+        var destinationTransform = CATransform3DIdentity
+        destinationTransform = CATransform3DTranslate(destinationTransform, destination.x, destination.y, 0)
+        basicAnimation.toValue = destinationTransform
+        basicAnimation.fillMode = kCAFillModeForwards
+        basicAnimation.isRemovedOnCompletion = false
+        layer.add(basicAnimation, forKey: AnimationKeys.dismissCard.rawValue)
+    }
+
+    /**
+    Return the destination point for the card that will be dismissed for the direction given. Destination is calculated
+    based on the conversion of coordinates [-1, 1] to UIScreen coordinates with the formula:
+
+        let x = 0.5 * (1 + self.x) * screenSize.width
+        let y = 0.5 * (1 + self.y) * screenSize.height
+        let result = (x, y)
+
+    - Parameter direction: Dismiss direction that determine the destination point for the animation
+    - Returns destination point (in screen coordinates)
+    */
+    private func dismissAnimationDestination(`for` direction: ShiftCardDirection) -> CGPoint {
+        // direction.point is defined in [-1, 1] coordinates...
+        let animatePoint = 4 * direction.point
+
+        // ... so we must convert it into UIScreen coordinates as follows:
+        let screenSize = UIScreen.main.bounds.size
+        let screenPointSize = CGPoint(x: screenSize.width, y: screenSize.height)
+
+        let destination = 0.5 * (screenPointSize + (animatePoint * screenPointSize))
+        return destination
     }
 
     /**
@@ -195,7 +238,7 @@ private extension ShiftCardViewCell {
         }
         
         let springAnimation = CASpringAnimation(keyPath: #keyPath(CALayer.transform))
-        springAnimation.duration = 1
+        springAnimation.duration = AnimationDuration.reset.rawValue
         springAnimation.fromValue = layer.transform
         springAnimation.toValue = CATransform3DIdentity
         springAnimation.damping = 10
@@ -218,6 +261,12 @@ extension ShiftCardViewCell: CAAnimationDelegate {
         if isResetCardAnimation {
             layer.transform = CATransform3DIdentity
             notifyCellPanShift(with: 0)
+            return
+        }
+
+        let isDismissCardAnimation = anim === layer.animation(forKey: AnimationKeys.dismissCard.rawValue)
+        if isDismissCardAnimation {
+            delegate?.shiftCardCell(self, didEndShift: true)
             return
         }
     }

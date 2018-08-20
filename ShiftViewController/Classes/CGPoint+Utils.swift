@@ -8,6 +8,18 @@ typealias CGLine = (start: CGPoint, end: CGPoint)
 
 extension CGPoint {
 
+    static func + (left: CGPoint, right: CGPoint) -> CGPoint {
+        return CGPoint(x: left.x + right.x, y: left.y + right.y)
+    }
+
+    static func * (left: CGFloat, right: CGPoint) -> CGPoint {
+        return CGPoint(x: left*right.x, y: left*right.y)
+    }
+
+    static func * (left: CGPoint, right: CGPoint) -> CGPoint {
+        return CGPoint(x: left.x * right.x, y: left.y * right.y)
+    }
+
     /**
     Normalize the distance into [-1, 1] coordinate system
     */
@@ -26,7 +38,7 @@ extension CGPoint {
     }
 
     /**
-    The scalar proyection from a vector "w" from another "v" is calculated as follow:
+    The scalar projection from a vector "w" from another "v" is calculated as follow:
                  w * v
         result = ----- * v
                  v * v
