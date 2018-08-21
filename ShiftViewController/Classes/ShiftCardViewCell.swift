@@ -77,6 +77,7 @@ open class ShiftCardViewCell: UIView {
             layer.transform = transform
 
             let percent = getDragPercentage(from: translation)
+            delegate?.shiftCardCell(self, didUpdateWithPercent: percent)
             notifyCellPanShift(with: percent)
         case .ended:
             onUserEndPan(from: translation)
@@ -116,14 +117,20 @@ private extension ShiftCardViewCell {
     */
     private func onUserEndPan(from translation: CGPoint) {
         guard getDragPercentage(from: translation) > shiftThreshold else {
+            //todo: Notificar a la celda también
+            delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
             resetCardLocation()
             return
         }
 
         guard let direction = try? getDragDirection(from: translation) else {
+            delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
+            //todo: Notificar a la celda también
             resetCardLocation()
             return
         }
+
+        delegate?.shiftCardCell(self, willEndShift: true, duration: AnimationDuration.dismiss.rawValue)
 
         layer.removeAllAnimations()
         let destination = dismissAnimationDestination(for: direction)
@@ -182,12 +189,13 @@ private extension ShiftCardViewCell {
         // Line that connects the user end drag point to the center
         let targetLine: CGLine = (swipePoint, CGPoint.zero)
 
-        return ShiftCardDirection
-                .coordinateRect
-                .perimeterLines
-                .compactMap { CGPoint.intersectionBetweenLines(targetLine, line2: $0) }
-                .map { centerDistance / $0.distanceTo(.zero) }
-                .min() ?? 0.0
+        let percent = ShiftCardDirection
+                        .coordinateRect
+                        .perimeterLines
+                        .compactMap { CGPoint.intersectionBetweenLines(targetLine, line2: $0) }
+                        .map { centerDistance / $0.distanceTo(.zero) }
+                        .min() ?? 0.0
+        return min(percent, 1.0)
     }
 
     /**
@@ -228,8 +236,6 @@ private extension ShiftCardViewCell {
      - Parameter animated: Indicate if this recover will perform with animation or not (default true)
      */
     private func resetCardLocation(animated: Bool = true) {
-        // todo: Notificar a las celdas que vuelven a estado 0
-
         layer.removeAllAnimations()
         
         if !animated {
@@ -261,6 +267,7 @@ extension ShiftCardViewCell: CAAnimationDelegate {
         if isResetCardAnimation {
             layer.transform = CATransform3DIdentity
             notifyCellPanShift(with: 0)
+            delegate?.shiftCardCell(self, didEndShift: false)
             return
         }
 

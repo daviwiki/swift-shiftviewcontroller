@@ -48,7 +48,7 @@ extension ViewController: ShiftCardViewDataSource {
     }
     
     func numberOfCards(shiftController: ShiftCardViewController) -> Int {
-        return 5
+        return 16
     }
     
     func card(shiftController: ShiftCardViewController, forItemAtIndex index: Int) -> ShiftCardViewCell {
