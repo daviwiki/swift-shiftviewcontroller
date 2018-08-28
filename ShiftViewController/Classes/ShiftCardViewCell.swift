@@ -66,8 +66,6 @@ open class ShiftCardViewCell: UIView {
             removeAnimations()
             layer.rasterizationScale = UIScreen.main.scale
             layer.shouldRasterize = true
-            // todo: notify begin swipe
-            print("Begin element animate")
         case .changed:
             let rotationStrength = min(translation.x / frame.width, maxRotation)
             let rotationAngle = animationDirectionY * maxRotationAngle * rotationStrength
@@ -117,15 +115,15 @@ private extension ShiftCardViewCell {
     */
     private func onUserEndPan(from translation: CGPoint) {
         guard getDragPercentage(from: translation) > shiftThreshold else {
-            //todo: Notificar a la celda también
+            notifyCellPanShift(with: 0)
             delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
             resetCardLocation()
             return
         }
 
         guard let direction = try? getDragDirection(from: translation) else {
+            notifyCellPanShift(with: 0)
             delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
-            //todo: Notificar a la celda también
             resetCardLocation()
             return
         }
