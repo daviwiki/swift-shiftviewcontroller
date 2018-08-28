@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-enum ShiftCardDirection {
+public enum ShiftCardDirection {
     case top
     case topRight
     case right

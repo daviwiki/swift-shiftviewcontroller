@@ -75,12 +75,14 @@ open class ShiftCardViewCell: UIView {
             layer.transform = transform
 
             let percent = getDragPercentage(from: translation)
+            let direction = try? getDragDirection(from: translation)
             delegate?.shiftCardCell(self, didUpdateWithPercent: percent)
-            notifyCellPanShift(with: percent)
+            cellPanShift(with: percent, andDirection: direction)
         case .ended:
             onUserEndPan(from: translation)
             layer.shouldRasterize = false
         default:
+            cellReset(animationDuration: AnimationDuration.reset.rawValue)
             resetCardLocation()
             layer.shouldRasterize = false
         }
@@ -92,11 +94,19 @@ open class ShiftCardViewCell: UIView {
     This method could be overwritten by all subclasses. Its notify each time the user drag the card through the
     screen with the percent (in range [0, 1]) from the origin point. By default do nothing
     - Parameter percent: shift percent at range [0, 1]
+    - Parameter direction: direction mark by the user. If nil -> unknown / reset
     */
-    open func notifyCellPanShift(with percent: CGFloat) {
+    open func cellPanShift(with percent: CGFloat, andDirection direction: ShiftCardDirection? = nil) {
         // to override
     }
 
+    /**
+    This method is called when cell try to reset its position to notify the current cell to perform an action
+    - Parameter animationDuration: Duration for the animation
+    */
+    open func cellReset(animationDuration: Double) {
+        // to override
+    }
 }
 
 // MARK: Error
@@ -115,14 +125,14 @@ private extension ShiftCardViewCell {
     */
     private func onUserEndPan(from translation: CGPoint) {
         guard getDragPercentage(from: translation) > shiftThreshold else {
-            notifyCellPanShift(with: 0)
+            cellReset(animationDuration: AnimationDuration.reset.rawValue)
             delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
             resetCardLocation()
             return
         }
 
         guard let direction = try? getDragDirection(from: translation) else {
-            notifyCellPanShift(with: 0)
+            cellReset(animationDuration: AnimationDuration.reset.rawValue)
             delegate?.shiftCardCell(self, willEndShift: false, duration: AnimationDuration.reset.rawValue)
             resetCardLocation()
             return
@@ -264,7 +274,6 @@ extension ShiftCardViewCell: CAAnimationDelegate {
 
         if isResetCardAnimation {
             layer.transform = CATransform3DIdentity
-            notifyCellPanShift(with: 0)
             delegate?.shiftCardCell(self, didEndShift: false)
             return
         }
