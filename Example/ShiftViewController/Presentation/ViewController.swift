@@ -9,32 +9,53 @@
 import UIKit
 import ShiftViewController
 
-class ViewController: UIViewController {
+protocol PlacesSelectorView: class {
+    func showPlaces(places: [Location])
+}
+
+class ViewController: UIViewController, PlacesSelectorView {
 
     private weak var shiftVC: ShiftCardViewController?
+    private var presenter: PlacesSelectorPresenter = PlacesSelectorPresenterDefault()
+    private var places: [Location] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mountShiftViewController()
+        presenter.bind(view: self)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.loadPlaces()
+    }
+
+    private func mountShiftViewController() {
         let width = view.bounds.width * 0.8
         let height = view.bounds.height * 0.8
         let x = (view.bounds.width - width) / 2
         let y = (view.bounds.height - height) / 2
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        
+
         let shiftVC = ShiftCardViewController()
         addChildViewController(shiftVC)
         shiftVC.view.frame = frame
         shiftVC.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(shiftVC.view)
         didMove(toParentViewController: shiftVC)
-        
+
         shiftVC.dataSource = self
 
         self.shiftVC = shiftVC
     }
 
     func reloadData() {
+        presenter.loadPlaces()
+    }
+
+    func showPlaces(places: [Location]) {
+        self.places.removeAll()
+        self.places.append(contentsOf: places)
         shiftVC?.reloadData()
     }
 }
@@ -48,49 +69,15 @@ extension ViewController: ShiftCardViewDataSource {
     }
     
     func numberOfCards(shiftController: ShiftCardViewController) -> Int {
-        return 16
+        return places.count
     }
     
     func card(shiftController: ShiftCardViewController, forItemAtIndex index: Int) -> ShiftCardViewCell {
-        return ViewCell()
+        let nib = UINib(nibName: "BeautifulPlacesShiftCell", bundle: Bundle.main)
+        let cell = nib.instantiate(withOwner: nil, options: nil).first as! BeautifulPlacesShiftCell
+        cell.show(location: places[index])
+        return cell
     }
-    
-}
-
-class ViewCell: ShiftCardViewCell {
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init() {
-        super.init(frame: .zero)
-        clipsToBounds = true
-        
-        let colors = [UIColor.red, .blue, .yellow, .orange, .brown, .cyan, .gray, .green]
-        let color = colors[Int(arc4random()) % colors.count]
-        
-        let contentView = UIView()
-        contentView.backgroundColor = color
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 6.0
-        contentView.layer.shadowRadius = 2.0
-        contentView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
-        
-        addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        let topConstraint = contentView.topAnchor.constraint(equalTo: topAnchor, constant: 8)
-        let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
-        let leftConstraint = contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8)
-        let rightConstraint = contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8)
-        rightConstraint.priority = UILayoutPriority(999)
-        bottomConstraint.priority = UILayoutPriority(999)
-
-        NSLayoutConstraint.activate([topConstraint, bottomConstraint, leftConstraint, rightConstraint])
-
-        layoutIfNeeded()
-    }
-    
 }
 
 class EmptyView: UIView {

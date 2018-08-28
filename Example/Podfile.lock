@@ -1,16 +1,25 @@
 PODS:
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
   - ShiftViewController (0.1.0)
 
 DEPENDENCIES:
+  - SDWebImage (~> 4.0)
   - ShiftViewController (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SDWebImage
 
 EXTERNAL SOURCES:
   ShiftViewController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ShiftViewController: c813f90c61080081ea7275830c8da1a44dcf6ba0
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  ShiftViewController: 57866d6310fce3830fd8328ce21665f7cd204197
 
-PODFILE CHECKSUM: 9e8dacaa5909163f316aaa11bc5f5592a27047ad
+PODFILE CHECKSUM: 21b3771f935a4b0efeac8ce60f26d51b60987c60
 
 COCOAPODS: 1.5.3

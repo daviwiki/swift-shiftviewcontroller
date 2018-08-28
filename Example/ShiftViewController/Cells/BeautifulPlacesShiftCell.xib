@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BeautifulPlacesShiftCell" customModule="ShiftViewController_Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0e-LS-47B" userLabel="View - container">
+                    <rect key="frame" x="16" y="36" width="343" height="615"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="89C-UA-RED">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="615"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znp-Aw-Fiy" userLabel="Label - Name">
+                            <rect key="frame" x="16" y="530.5" width="311" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdh-sF-YL6" userLabel="Label - Country">
+                            <rect key="frame" x="16" y="576.5" width="311" height="22.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JEt-uA-8jy">
+                            <rect key="frame" x="161" y="297" width="20" height="20"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="fdh-sF-YL6" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" constant="16" id="E2E-fe-kv6"/>
+                        <constraint firstItem="89C-UA-RED" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" id="GaI-iG-c5E"/>
+                        <constraint firstItem="JEt-uA-8jy" firstAttribute="centerX" secondItem="Q0e-LS-47B" secondAttribute="centerX" id="J1n-Bp-VaQ"/>
+                        <constraint firstAttribute="trailing" secondItem="89C-UA-RED" secondAttribute="trailing" id="JU3-Yv-bfF"/>
+                        <constraint firstAttribute="trailing" secondItem="znp-Aw-Fiy" secondAttribute="trailing" constant="16" id="SsM-G9-j0t"/>
+                        <constraint firstItem="JEt-uA-8jy" firstAttribute="centerY" secondItem="Q0e-LS-47B" secondAttribute="centerY" id="T7P-WL-Ssq"/>
+                        <constraint firstItem="89C-UA-RED" firstAttribute="top" secondItem="Q0e-LS-47B" secondAttribute="top" id="U5S-Ul-g01"/>
+                        <constraint firstAttribute="trailing" secondItem="fdh-sF-YL6" secondAttribute="trailing" constant="16" id="e2r-J4-Zhh"/>
+                        <constraint firstAttribute="bottom" secondItem="fdh-sF-YL6" secondAttribute="bottom" constant="16" id="fk8-wY-f0d"/>
+                        <constraint firstItem="znp-Aw-Fiy" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" constant="16" id="jM0-mr-TIz"/>
+                        <constraint firstItem="fdh-sF-YL6" firstAttribute="top" secondItem="znp-Aw-Fiy" secondAttribute="bottom" constant="16" id="nFT-Xd-cmZ"/>
+                        <constraint firstAttribute="bottom" secondItem="89C-UA-RED" secondAttribute="bottom" id="tzF-Hq-Buh"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Q0e-LS-47B" secondAttribute="bottom" constant="16" id="Kzz-Fi-RRv"/>
+                <constraint firstItem="Q0e-LS-47B" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="VjC-PA-Uv6"/>
+                <constraint firstItem="Q0e-LS-47B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Xh5-Sa-j8C"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Q0e-LS-47B" secondAttribute="trailing" constant="16" id="c93-Jt-cAk"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="containerView" destination="Q0e-LS-47B" id="bxM-dW-NLK"/>
+                <outlet property="countryLabel" destination="fdh-sF-YL6" id="per-oI-PFV"/>
+                <outlet property="loadingView" destination="JEt-uA-8jy" id="OCF-Oh-Sg2"/>
+                <outlet property="nameLabel" destination="znp-Aw-Fiy" id="z8u-em-A3Z"/>
+                <outlet property="photoImageView" destination="89C-UA-RED" id="e2g-xY-fxf"/>
+            </connections>
+            <point key="canvasLocation" x="-29" y="37"/>
+        </view>
+    </objects>
+</document>

@@ -3,6 +3,7 @@ platform :ios, '9.3'
 
 target 'ShiftViewController_Example' do
   pod 'ShiftViewController', :path => '../'
+  pod 'SDWebImage', '~> 4.0'
 
   target 'ShiftViewController_Tests' do
     inherit! :search_paths

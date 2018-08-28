@@ -7,14 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		469DFFA12135CADE00CBCD0C /* BeautifulPlacesShiftCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 469DFFA02135CADE00CBCD0C /* BeautifulPlacesShiftCell.xib */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		8E044CFB42C3C21605549231 /* Pods_ShiftViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57FECA21FCD8223D797F0AA /* Pods_ShiftViewController_Example.framework */; };
 		969333033236ADB6F065157A /* Pods_ShiftViewController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C619E78AF0AF5990D28B7B2F /* Pods_ShiftViewController_Tests.framework */; };
+		E2FC60F22F4CE5932F01FBF8 /* GetPlacesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC67A597CDF58B51F941AC /* GetPlacesInteractor.swift */; };
+		E2FC647B1F6F511048E33E24 /* LikePeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC67E7047CD35186530EA7 /* LikePeople.swift */; };
+		E2FC65EB47FE0B33B4D89882 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC609724BE0FEEA7E143C1 /* ViewController.swift */; };
+		E2FC6623B8D1AD3C26E532E6 /* PlacesSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC652E6D69A0087E2D996E /* PlacesSelectorPresenter.swift */; };
+		E2FC6C86D4C7F5E3BEF9B007 /* BeautifulPlacesShiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC6E2257F8029BF440769D /* BeautifulPlacesShiftCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +34,10 @@
 
 /* Begin PBXFileReference section */
 		14FF63BD59BC9C59DFF94C3A /* Pods-ShiftViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShiftViewController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShiftViewController_Example/Pods-ShiftViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
+		469DFFA02135CADE00CBCD0C /* BeautifulPlacesShiftCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeautifulPlacesShiftCell.xib; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* ShiftViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShiftViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -46,6 +51,11 @@
 		C57FECA21FCD8223D797F0AA /* Pods_ShiftViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShiftViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C619E78AF0AF5990D28B7B2F /* Pods_ShiftViewController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShiftViewController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24F6EAEF3F1A13E2AF144C5 /* ShiftViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ShiftViewController.podspec; path = ../ShiftViewController.podspec; sourceTree = "<group>"; };
+		E2FC609724BE0FEEA7E143C1 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E2FC652E6D69A0087E2D996E /* PlacesSelectorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesSelectorPresenter.swift; sourceTree = "<group>"; };
+		E2FC67A597CDF58B51F941AC /* GetPlacesInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPlacesInteractor.swift; sourceTree = "<group>"; };
+		E2FC67E7047CD35186530EA7 /* LikePeople.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikePeople.swift; sourceTree = "<group>"; };
+		E2FC6E2257F8029BF440769D /* BeautifulPlacesShiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeautifulPlacesShiftCell.swift; sourceTree = "<group>"; };
 		FFB3D43E323900453C8C4484 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,11 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				E2FC66EC5AE6B0AA66C583ED /* Cells */,
+				E2FC6095EAFE3A3B87509DC0 /* Model */,
+				E2FC6DDB354A787E5775066F /* Business */,
+				E2FC648C563AFC53C33A9D70 /* Presentation */,
 			);
 			name = "Example for ShiftViewController";
 			path = ShiftViewController;
@@ -157,6 +170,40 @@
 				C619E78AF0AF5990D28B7B2F /* Pods_ShiftViewController_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2FC6095EAFE3A3B87509DC0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2FC67E7047CD35186530EA7 /* LikePeople.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E2FC648C563AFC53C33A9D70 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				E2FC652E6D69A0087E2D996E /* PlacesSelectorPresenter.swift */,
+				E2FC609724BE0FEEA7E143C1 /* ViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		E2FC66EC5AE6B0AA66C583ED /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E2FC6E2257F8029BF440769D /* BeautifulPlacesShiftCell.swift */,
+				469DFFA02135CADE00CBCD0C /* BeautifulPlacesShiftCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E2FC6DDB354A787E5775066F /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				E2FC67A597CDF58B51F941AC /* GetPlacesInteractor.swift */,
+			);
+			path = Business;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				469DFFA12135CADE00CBCD0C /* BeautifulPlacesShiftCell.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -268,10 +316,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ShiftViewController_Example/Pods-ShiftViewController_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/ShiftViewController/ShiftViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ShiftViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,8 +372,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				E2FC6C86D4C7F5E3BEF9B007 /* BeautifulPlacesShiftCell.swift in Sources */,
+				E2FC647B1F6F511048E33E24 /* LikePeople.swift in Sources */,
+				E2FC60F22F4CE5932F01FBF8 /* GetPlacesInteractor.swift in Sources */,
+				E2FC6623B8D1AD3C26E532E6 /* PlacesSelectorPresenter.swift in Sources */,
+				E2FC65EB47FE0B33B4D89882 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
