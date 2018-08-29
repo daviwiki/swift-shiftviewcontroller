@@ -22,6 +22,10 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="89C-UA-RED">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="615"/>
                         </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwI-l3-woG" userLabel="View - veil">
+                            <rect key="frame" x="0.0" y="466.5" width="343" height="148.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znp-Aw-Fiy" userLabel="Label - Name">
                             <rect key="frame" x="16" y="530.5" width="311" height="30"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
@@ -38,20 +42,54 @@
                             <color key="shadowColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <size key="shadowOffset" width="1" height="1"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I Like It!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTu-nD-zFf" userLabel="Label - Like">
+                            <rect key="frame" x="24" y="100" width="84" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                            <color key="textColor" red="0.55615167132222221" green="0.88503689236111116" blue="0.15326605902777779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I don't like ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7B-Pq-e8f" userLabel="Label - Dislike">
+                            <rect key="frame" x="183" y="100" width="136" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                            <color key="textColor" red="0.95860460069444442" green="0.0" blue="0.30783420136111111" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woah! Awesome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozL-oA-231" userLabel="Label - Superlike">
+                            <rect key="frame" x="76.5" y="436.5" width="191" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                            <color key="textColor" red="0.48958266088333335" green="0.87803819448333342" blue="0.96242947048611116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JEt-uA-8jy">
                             <rect key="frame" x="161" y="297" width="20" height="20"/>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="ozL-oA-231" firstAttribute="centerX" secondItem="Q0e-LS-47B" secondAttribute="centerX" id="5CY-a1-NNt"/>
+                        <constraint firstItem="cwI-l3-woG" firstAttribute="top" secondItem="znp-Aw-Fiy" secondAttribute="top" constant="-64" id="AQE-Dd-5WY"/>
                         <constraint firstItem="fdh-sF-YL6" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" constant="16" id="E2E-fe-kv6"/>
+                        <constraint firstAttribute="trailing" secondItem="v7B-Pq-e8f" secondAttribute="trailing" constant="24" id="F9G-5N-Quu"/>
+                        <constraint firstItem="cwI-l3-woG" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" id="Fr5-Wd-e4L"/>
                         <constraint firstItem="89C-UA-RED" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" id="GaI-iG-c5E"/>
+                        <constraint firstItem="PTu-nD-zFf" firstAttribute="top" secondItem="Q0e-LS-47B" secondAttribute="top" constant="100" id="ImM-4e-yL3"/>
                         <constraint firstItem="JEt-uA-8jy" firstAttribute="centerX" secondItem="Q0e-LS-47B" secondAttribute="centerX" id="J1n-Bp-VaQ"/>
                         <constraint firstAttribute="trailing" secondItem="89C-UA-RED" secondAttribute="trailing" id="JU3-Yv-bfF"/>
+                        <constraint firstItem="v7B-Pq-e8f" firstAttribute="top" secondItem="Q0e-LS-47B" secondAttribute="top" constant="100" id="Qxw-dD-ahu"/>
+                        <constraint firstItem="PTu-nD-zFf" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" constant="24" id="Rvw-JH-DCd"/>
                         <constraint firstAttribute="trailing" secondItem="znp-Aw-Fiy" secondAttribute="trailing" constant="16" id="SsM-G9-j0t"/>
                         <constraint firstItem="JEt-uA-8jy" firstAttribute="centerY" secondItem="Q0e-LS-47B" secondAttribute="centerY" id="T7P-WL-Ssq"/>
                         <constraint firstItem="89C-UA-RED" firstAttribute="top" secondItem="Q0e-LS-47B" secondAttribute="top" id="U5S-Ul-g01"/>
+                        <constraint firstAttribute="trailing" secondItem="cwI-l3-woG" secondAttribute="trailing" id="WBZ-y7-9hh"/>
+                        <constraint firstAttribute="bottom" secondItem="cwI-l3-woG" secondAttribute="bottom" id="XgE-Tc-OZW"/>
                         <constraint firstAttribute="trailing" secondItem="fdh-sF-YL6" secondAttribute="trailing" constant="16" id="e2r-J4-Zhh"/>
+                        <constraint firstItem="znp-Aw-Fiy" firstAttribute="top" secondItem="ozL-oA-231" secondAttribute="bottom" constant="64" id="fLk-Aq-iE8"/>
                         <constraint firstAttribute="bottom" secondItem="fdh-sF-YL6" secondAttribute="bottom" constant="16" id="fk8-wY-f0d"/>
                         <constraint firstItem="znp-Aw-Fiy" firstAttribute="leading" secondItem="Q0e-LS-47B" secondAttribute="leading" constant="16" id="jM0-mr-TIz"/>
                         <constraint firstItem="fdh-sF-YL6" firstAttribute="top" secondItem="znp-Aw-Fiy" secondAttribute="bottom" constant="16" id="nFT-Xd-cmZ"/>
@@ -70,11 +108,15 @@
             <connections>
                 <outlet property="containerView" destination="Q0e-LS-47B" id="bxM-dW-NLK"/>
                 <outlet property="countryLabel" destination="fdh-sF-YL6" id="per-oI-PFV"/>
+                <outlet property="dislikeLabel" destination="v7B-Pq-e8f" id="QHE-3Q-4cv"/>
+                <outlet property="likeLabel" destination="PTu-nD-zFf" id="lZf-3d-J2T"/>
                 <outlet property="loadingView" destination="JEt-uA-8jy" id="OCF-Oh-Sg2"/>
                 <outlet property="nameLabel" destination="znp-Aw-Fiy" id="z8u-em-A3Z"/>
                 <outlet property="photoImageView" destination="89C-UA-RED" id="e2g-xY-fxf"/>
+                <outlet property="superlikeLabel" destination="ozL-oA-231" id="GRg-Z8-Pn6"/>
+                <outlet property="veilContainerView" destination="cwI-l3-woG" id="kvK-RM-Bfe"/>
             </connections>
-            <point key="canvasLocation" x="-29" y="37"/>
+            <point key="canvasLocation" x="-29.5" y="36.5"/>
         </view>
     </objects>
 </document>
