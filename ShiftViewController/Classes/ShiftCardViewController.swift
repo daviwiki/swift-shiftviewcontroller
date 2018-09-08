@@ -45,6 +45,9 @@ public class ShiftCardViewController: UIViewController {
         }
 
         view.setNeedsDisplay()
+
+        // Enable first cell only
+        visibleCards.first?.enableUserDragging()
     }
 
     /**
@@ -171,6 +174,8 @@ extension ShiftCardViewController: ShiftCardViewCellDelegate {
                 self.setFrame(forCard: self.visibleCards[index], atIndex: index)
             }
         }
+
+        visibleCards.first?.enableUserDragging()
 
         if visibleCards.count == 0, let emptyView = dataSource?.noMoreCardsView(shiftController: self) {
             add(emptyView: emptyView, animated: true)

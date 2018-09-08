@@ -25,32 +25,28 @@ open class ShiftCardViewCell: UIView {
     private let maxRotation: CGFloat = 1.0
     private let animationDirectionY: CGFloat = 1.0
     private let maxRotationAngle: CGFloat = CGFloat(Double.pi) / 10.0
+    private var isAnimating: Bool = false
 
     weak var delegate: ShiftCardViewCellDelegate?
 
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupGestureRecognizers()
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupGestureRecognizers()
-    }
-    
     deinit {
         if let panGesture = panGestureRecognizer {
             removeGestureRecognizer(panGesture)
         }
     }
-    
+
+    func enableUserDragging() {
+        setupGestureRecognizers()
+    }
+
     private func setupGestureRecognizers() {
         // Pan Gesture Recognizer
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognized(_:)))
         self.panGestureRecognizer = panGestureRecognizer
+        panGestureRecognizer.delegate = self
         addGestureRecognizer(panGestureRecognizer)
     }
-    
+
     @objc private func panGestureRecognized(_ panGesture: UIPanGestureRecognizer) {
         let translation = panGesture.translation(in: self)
 
@@ -93,6 +89,7 @@ open class ShiftCardViewCell: UIView {
     - Parameter direction: The direction selected to dismiss the card
     */
     public func dismissCard(with direction: ShiftCardDirection) {
+        guard !isAnimating else { return }
         applyDismissCardAnimation(with: direction)
     }
 
@@ -174,6 +171,8 @@ private extension ShiftCardViewCell {
         basicAnimation.toValue = destinationTransform
         basicAnimation.fillMode = kCAFillModeForwards
         basicAnimation.isRemovedOnCompletion = false
+
+        isAnimating = true
         layer.add(basicAnimation, forKey: AnimationKeys.dismissCard.rawValue)
     }
 
@@ -291,8 +290,8 @@ private extension ShiftCardViewCell {
         springAnimation.fillMode = kCAFillModeRemoved
         springAnimation.delegate = self
 
-        let key = AnimationKeys.resetCard.rawValue
-        layer.add(springAnimation, forKey: key)
+        isAnimating = true
+        layer.add(springAnimation, forKey: AnimationKeys.resetCard.rawValue)
     }
 
 }
@@ -300,6 +299,10 @@ private extension ShiftCardViewCell {
 extension ShiftCardViewCell: CAAnimationDelegate {
 
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        defer {
+            isAnimating = false
+        }
+
         let isResetCardAnimation = anim === layer.animation(forKey: AnimationKeys.resetCard.rawValue)
 
         if isResetCardAnimation {
@@ -313,5 +316,11 @@ extension ShiftCardViewCell: CAAnimationDelegate {
             delegate?.shiftCardCell(self, didEndShift: true)
             return
         }
+    }
+}
+
+extension ShiftCardViewCell: UIGestureRecognizerDelegate {
+    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return !isAnimating
     }
 }
