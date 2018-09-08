@@ -15,6 +15,8 @@ protocol PlacesSelectorView: class {
 
 class ViewController: UIViewController, PlacesSelectorView {
 
+    @IBOutlet private weak var bottomContainerView: UIView!
+
     private weak var shiftVC: ShiftCardViewController?
     private var presenter: PlacesSelectorPresenter = PlacesSelectorPresenterDefault()
     private var places: [Location] = []
@@ -58,6 +60,19 @@ class ViewController: UIViewController, PlacesSelectorView {
         self.places.append(contentsOf: places)
         shiftVC?.reloadData()
     }
+
+    @IBAction func onDislike(sender: UIButton) {
+        shiftVC?.dimissCard(with: .left)
+    }
+
+    @IBAction func onLike(sender: UIButton) {
+        shiftVC?.dimissCard(with: .right)
+    }
+
+    @IBAction func onSuperlike(sender: UIButton) {
+        shiftVC?.dimissCard(with: .top)
+    }
+
 }
 
 extension ViewController: ShiftCardViewDataSource {

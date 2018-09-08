@@ -116,6 +116,15 @@ public class ShiftCardViewController: UIViewController {
             }
         }
     }
+
+    /**
+     Dismiss the top card. If no one is displayed, this method do nothing
+     - Parameter direction: Dismiss the top level card in the direction given
+    */
+    public func dimissCard(with direction: ShiftCardDirection) {
+        guard let cell = visibleCards.first else { return }
+        cell.dismissCard(with: direction)
+    }
 }
 
 extension ShiftCardViewController: ShiftCardViewCellDelegate {

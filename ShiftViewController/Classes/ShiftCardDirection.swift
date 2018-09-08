@@ -70,6 +70,7 @@ public enum ShiftCardDirection {
         }
     }
 
+    // Returns the vector defined for the direction into the [-1, 1] coordinate system
     var point: CGPoint {
         return CGPoint(x: horizontalPosition.rawValue, y: verticalPosition.rawValue)
     }

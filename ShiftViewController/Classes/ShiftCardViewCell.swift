@@ -88,6 +88,14 @@ open class ShiftCardViewCell: UIView {
         }
     }
 
+    /**
+    Eject the card outside the stack with animation in the direction selected
+    - Parameter direction: The direction selected to dismiss the card
+    */
+    public func dismissCard(with direction: ShiftCardDirection) {
+        applyDismissCardAnimation(with: direction)
+    }
+
     // MARK - Override methods
 
     /**
@@ -139,15 +147,29 @@ private extension ShiftCardViewCell {
         }
 
         delegate?.shiftCardCell(self, willEndShift: true, duration: AnimationDuration.dismiss.rawValue)
+        applyDismissCardAnimation(with: direction)
+    }
+
+    /**
+    Apply the animation to the cell using the same way that when user drag (all items will be notified)
+    - Parameter direction: The direction selected to dismiss the card
+    */
+    private func applyDismissCardAnimation(with direction: ShiftCardDirection) {
+        removeAnimations()
 
         layer.removeAllAnimations()
         let destination = dismissAnimationDestination(for: direction)
+        let rotationStrength = min(destination.x / frame.width, maxRotation)
+        let rotationAngle = animationDirectionY * maxRotationAngle * rotationStrength
+
+        var destinationTransform = CATransform3DIdentity
+        destinationTransform = CATransform3DRotate(destinationTransform, rotationAngle, 0, 0, 1)
+        destinationTransform = CATransform3DTranslate(destinationTransform, destination.x, destination.y, 0)
+
         let basicAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
         basicAnimation.duration = AnimationDuration.dismiss.rawValue
         basicAnimation.delegate = self
         basicAnimation.fromValue = self.transform
-        var destinationTransform = CATransform3DIdentity
-        destinationTransform = CATransform3DTranslate(destinationTransform, destination.x, destination.y, 0)
         basicAnimation.toValue = destinationTransform
         basicAnimation.fillMode = kCAFillModeForwards
         basicAnimation.isRemovedOnCompletion = false
@@ -166,15 +188,22 @@ private extension ShiftCardViewCell {
     - Returns destination point (in screen coordinates)
     */
     private func dismissAnimationDestination(`for` direction: ShiftCardDirection) -> CGPoint {
-        // direction.point is defined in [-1, 1] coordinates...
-        let animatePoint = 4 * direction.point
-
-        // ... so we must convert it into UIScreen coordinates as follows:
         let screenSize = UIScreen.main.bounds.size
         let screenPointSize = CGPoint(x: screenSize.width, y: screenSize.height)
 
-        let destination = 0.5 * (screenPointSize + (animatePoint * screenPointSize))
-        return destination
+        let x: CGFloat = 1
+        let y: CGFloat = 1
+
+        switch direction {
+        case .topLeft: return CGPoint(x: -x, y: -2*y) * screenPointSize
+        case .top: return CGPoint(x: 0, y: (-3/2)*y) * screenPointSize
+        case .topRight: return CGPoint(x: x, y: -2*y) * screenPointSize
+        case .right: return CGPoint(x: (3/2)*x, y: -(1/3)*y) * screenPointSize
+        case .bottomRight: return CGPoint(x: 2*x, y: y) * screenPointSize
+        case .bottom: return CGPoint(x: 0, y: y) * screenPointSize
+        case .bottomLeft: return CGPoint(x: -(7/2)*x, y: (1/2)*y) * screenPointSize
+        case .left: return CGPoint(x: -(3/2)*x, y: -(1/2)*y) * screenPointSize
+        }
     }
 
     /**
@@ -244,13 +273,13 @@ private extension ShiftCardViewCell {
      - Parameter animated: Indicate if this recover will perform with animation or not (default true)
      */
     private func resetCardLocation(animated: Bool = true) {
-        layer.removeAllAnimations()
+        removeAnimations()
         
         if !animated {
             layer.transform = CATransform3DIdentity
             return
         }
-        
+
         let springAnimation = CASpringAnimation(keyPath: #keyPath(CALayer.transform))
         springAnimation.duration = AnimationDuration.reset.rawValue
         springAnimation.fromValue = layer.transform
@@ -258,9 +287,9 @@ private extension ShiftCardViewCell {
         springAnimation.damping = 10
         springAnimation.stiffness = 100
         springAnimation.isRemovedOnCompletion = false
-        springAnimation.fillMode = kCAFillModeForwards
+        springAnimation.fillMode = kCAFillModeRemoved
         springAnimation.delegate = self
-        
+
         let key = AnimationKeys.resetCard.rawValue
         layer.add(springAnimation, forKey: key)
     }
