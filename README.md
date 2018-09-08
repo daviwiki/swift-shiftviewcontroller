@@ -17,7 +17,7 @@
 ShiftViewController is available through my private repository at github so, if you want to install in this way you must include this into your Podfile
 
 ```ruby
-source '<Include the source when available>'
+source 'https://github.com/daviwiki/daviwiki-podspecs'
 ``` 
 
 Once included you could import the Pod into your desired spec.
