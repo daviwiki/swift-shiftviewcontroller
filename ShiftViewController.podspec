@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/daviwiki/swift-shiftviewcontroller.git'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'daviwiki' => 'david.martinez@innocv.com' }
-  s.source           = { :git => 'https://github.com/daviwiki/ShiftViewController.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/daviwiki/swift-shiftviewcontroller.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '9.0'
 
