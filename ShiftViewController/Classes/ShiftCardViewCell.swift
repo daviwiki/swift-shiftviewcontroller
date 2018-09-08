@@ -158,6 +158,7 @@ private extension ShiftCardViewCell {
         removeAnimations()
 
         layer.removeAllAnimations()
+        delegate?.shiftCardCell(self, willEndShift: true, duration: AnimationDuration.dismiss.rawValue)
         let destination = dismissAnimationDestination(for: direction)
         let rotationStrength = min(destination.x / frame.width, maxRotation)
         let rotationAngle = animationDirectionY * maxRotationAngle * rotationStrength

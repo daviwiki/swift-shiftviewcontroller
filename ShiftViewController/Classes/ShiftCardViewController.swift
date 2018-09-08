@@ -161,15 +161,14 @@ extension ShiftCardViewController: ShiftCardViewCellDelegate {
 
         // Include new cells if needed
         if let card = requestNewCellToAddAtEnd() {
-            add(cardView: card, at: maxVisibleCards - 1)
+            // Insert the last cell one position after to perform it with a shift-y animation
+            add(cardView: card, at: maxVisibleCards - 2)
         }
 
         // perform new view state for new cells
         UIView.animate(withDuration: 0.2) { [unowned self] in
-            var index = 0
-            self.visibleCards.forEach {
-                self.setFrame(forCard: $0, atIndex: index)
-                index += 1
+            for index in 0..<self.visibleCards.count {
+                self.setFrame(forCard: self.visibleCards[index], atIndex: index)
             }
         }
 

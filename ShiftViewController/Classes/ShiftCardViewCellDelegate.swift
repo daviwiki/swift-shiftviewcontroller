@@ -8,7 +8,7 @@ import CoreGraphics
 protocol ShiftCardViewCellDelegate: class {
 
     /**
-    Notified when the user drag will begin
+    Notified when the user drag ends and the animations will begin
     - Parameter shiftCardCell: The cell that perform the animation
     - Parameter completed: Indicates that the cell will be dimissed (true) or will be recovered (false)
     - Parameter duration: The duration for the internal animations
